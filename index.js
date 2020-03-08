@@ -1,20 +1,23 @@
 import express from 'express';
-import FirebaseDB from './controller/FirebaseDB';
+import cors from 'cors';
+import subdomain from 'express-subdomain';
+import bodyParser from 'body-parser';
+import views from './routes/view.js';
+import firebase from './routes/firebase.js';
+
 
 const app = express();
-const firebaseDB = new FirebaseDB();
 
-const port = 3000;
+app.use(cors());
+app.use(bodyParser.json());
+app.use(subdomain('admin', views));
 
-app.get('/', (req, res) => res.send('Hello World!'));
+const port = process.env.PORT || 4000;
 
-app.get('/:urlKey', async (req, res) => {
-  try {
-    const document = await firebaseDB.getURL(req.params.urlKey);
-    res.redirect(document.get('url'));
-  } catch (error) {
-    res.send('URL Nao encontrada');
-  }
-});
+app.use(firebase);
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port);
+
+// app.listen(port, () => {
+//   console.log(`listening on ${port}`);
+// });
