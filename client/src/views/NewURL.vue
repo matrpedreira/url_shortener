@@ -43,6 +43,10 @@
 <script>
 import axios from 'axios';
 
+function removeSubdomain(domain) {
+  return domain.replace('admin.', '');
+}
+
 export default {
 
   data: () => ({
@@ -58,7 +62,10 @@ export default {
         if (!this.url.includes('http')) {
           newURL = `https://${this.url}`;
         }
-        const response = await axios.post('http://localhost:4000/api/newURL', {
+        const domain = removeSubdomain(document.domain);
+        const reqURL = `http://${domain}/api/newURL`;
+        console.log(reqURL);
+        const response = await axios.post(reqURL, {
           url: newURL,
           urlKey: this.urlKey,
         });
