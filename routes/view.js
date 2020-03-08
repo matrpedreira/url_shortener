@@ -7,7 +7,7 @@ var router = express.Router();
 const correctPath = __dirname.replace('/routes', '');
 console.log(correctPath);
 
-const staticFileMiddleware = serveStatic(correctPath + "/client/dist")
+const staticFileMiddleware = serveStatic(correctPath + "/dist")
 
 router.use(staticFileMiddleware);
 router.use(history())

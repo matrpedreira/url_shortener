@@ -5,7 +5,6 @@ import bodyParser from 'body-parser';
 import views from './routes/view.js';
 import firebase from './routes/firebase.js';
 
-
 const app = express();
 
 app.use(cors());
