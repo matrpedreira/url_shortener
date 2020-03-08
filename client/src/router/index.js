@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Login from '../views/Login.vue';
-import NewURL from '../views/NewURL.vue';
+import URLManager from '../views/URLManager.vue';
 
 Vue.use(VueRouter);
 
@@ -12,9 +12,9 @@ const routes = [
     component: Login,
   },
   {
-    path: '/newURL',
-    name: 'NewURL',
-    component: NewURL,
+    path: '/urls',
+    name: 'URLManager',
+    component: URLManager,
   },
 ];
 

@@ -1,5 +1,6 @@
 import * as admin from 'firebase-admin';
 import serviceAccount from '../firebase_admin.json';
+import Link from '../models/Link.js';
 
 const FIREBASE_URL = 'https://urlshortener-8cef3.firebaseio.com';
 
@@ -33,6 +34,7 @@ function FirebaseDB() {
         try {
           const newDoc = await firestore.collection('links').doc(urlKey).set({
             url,
+            createdAt: Date.now(),
             clicks: 0,
           });
           return newDoc;
@@ -44,6 +46,15 @@ function FirebaseDB() {
         throw new Error('URLKEY ALREADY USED');
       }
     },
+    async fetchURLs() {
+      try {
+        const linksCollection = await firestore.collection('links').orderBy('createdAt', 'DESC').limit(10).get();
+        return linksCollection.docs.map(doc => new Link(doc));
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    }
   };
 }
 

@@ -47,6 +47,14 @@ function removeSubdomain(domain) {
   return domain.replace('admin.', '');
 }
 
+let baseURL = '';
+if (process.env.NODE_ENV === 'development') {
+  baseURL = 'http://localhost:4000';
+} else {
+  const domain = removeSubdomain(document.domain);
+  baseURL = `https://${domain}`;
+}
+
 export default {
 
   data: () => ({
@@ -62,8 +70,7 @@ export default {
         if (!this.url.includes('http')) {
           newURL = `https://${this.url}`;
         }
-        const domain = removeSubdomain(document.domain);
-        const reqURL = `http://${domain}/api/newURL`;
+        const reqURL = `${baseURL}/api/newURL`;
         console.log(reqURL);
         const response = await axios.post(reqURL, {
           url: newURL,

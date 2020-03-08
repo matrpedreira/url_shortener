@@ -12,4 +12,9 @@ describe('Firebase Tests', () => {
     await firebaseDB.createURL('templateKey2', 'www.google.com');
     expect(true).toBe(true);
   });
+  test.only('Fetch urls', async () => {
+    const documents = await firebaseDB.fetchURLs();
+    console.log(documents);
+    expect(true).toBe(true);
+  });
 });
